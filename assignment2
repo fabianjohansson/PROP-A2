@@ -4,6 +4,6 @@
 (defn -main []
   (println "Hello, World!"))
 
-;;macro for excepetion handling
+;;macro for exception handling
 (defmacro safe
   ([v] `(try ~v (catch Exception e# ( str "Exception " e#)))))
