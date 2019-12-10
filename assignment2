@@ -7,3 +7,15 @@
 ;;macro for exception handling
 (defmacro safe
   ([v] `(try ~v (catch Exception e# ( str "Exception " e#)))))
+
+;;for calls with Closable java file
+(defmacro safe ([& args] 
+
+(try(let [first args] (try ~(rest args) (catch Exception e# (str "Exception " e#)))))))
+
+
+;;test code
+(def v (safe [s (FileReader. (File. "file.txt"))] (.read s)))
+
+;;test code
+v
