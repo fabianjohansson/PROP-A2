@@ -19,3 +19,32 @@
 
 ;;test code
 v
+
+
+
+
+;DETTA ÄR KOD SOM NÄSTAN ÖR KLAR, FUNGERAR TYP KANSKE EVENTUELLT
+
+(ns assignment2.core
+  (:gen-class))
+
+(import java.io.FileReader java.io.File)
+
+
+
+(defmacro safe [& all]
+  (if(> (count all) 1)
+    `(let ~(first all) (try ~@(rest all) (catch Exception e# e#)))
+    `(try ~@all (catch Exception e# (str "Caught exception " e#)))))
+
+
+
+
+
+(defn -main []
+  (println "hello world!")
+  (println (safe  (/ 1 0)))
+  (println (safe  (/ 10 2)))
+  (println (safe (/ 10 nil)))
+  (def v (safe [s (FileReader. (File. "C:\\Usedsrs\\dogge\\IdeaProjects\\assign2prop\\src\\assign2prop\\text.txt"))] (.read s)))
+  (println v))
