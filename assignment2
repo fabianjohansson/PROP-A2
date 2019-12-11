@@ -34,8 +34,9 @@ v
 
 (defmacro safe [& all]
   (if(> (count all) 1)
-    `(let ~(first all) (try ~@(rest all) (catch Exception e# e#)))
-    `(try ~@all (catch Exception e# (str "Caught exception " e#)))))
+    `(try (let ~(first all)(try ~@(rest all)(catch Exception e# (str "Cought Exception " e#))))(catch Exception e# (str "Cought Exception " e#)))
+    
+    `(try ~@all (catch Exception e# (str "Caught Exception " e#)))))
 
 
 
