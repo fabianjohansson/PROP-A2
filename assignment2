@@ -29,7 +29,7 @@ v
   (:gen-class))
 
 (import java.io.FileReader java.io.File)
-
+(import java.io.Closeable)
 
 
 (defmacro safe [& all]
@@ -37,6 +37,17 @@ v
     `(try (let ~(first all) ~@(rest all))(catch Exception e# (str "Cought Exception " e#)))
     `(try ~@all (catch Exception e# (str "Caught Exception " e#)))))
 
+
+;;fungerar för anrop med både ett och två argument
+;;retunerar exception för ett argument sämre för två, osäker på om .close fungerar
+
+(defmacro safe [& all]
+  (cond (> (count all) 1)
+     `(let ~(first all) (try ~@(rest all) (catch Exception e# (str "Caught Exception " e#))))
+    `(try ~@all (catch Exception e# (str "Caught exception " e#) 
+    (finally (if (instance? java.io.Closeable ~@all)
+      (.close ~@all) 
+    ))))`(try ~@all (catch Exception e# ( str "Exception " e#)))))
 
 
 (defn -main []
