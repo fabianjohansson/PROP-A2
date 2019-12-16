@@ -8,5 +8,5 @@
 (if(>(count all)1)
 `(try (let ~(first all) (def result ~(second all))
 (if(instance? Closeable ~(ffirst all))
-(.close ~(ffirst all)))result)(catch Exception e# (str "Caught excpetion " e#)))
-`(try ~@all (catch Exception e# (str "Caught exception " e#)))))
+(.close ~(ffirst all)))result)(catch Exception e# e#))
+`(try ~@all (catch Exception e# e#))))
