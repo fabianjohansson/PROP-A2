@@ -1,59 +1,12 @@
 (ns prop-assignment2.core
   (:gen-class))
 
-(defn -main []
-  (println "Hello, World!"))
-
-;;macro for exception handling
-(defmacro safe
-  ([v] `(try ~v (catch Exception e# ( str "Exception " e#)))))
-
-;;for calls with Closable java file
-(defmacro safe ([& args] 
-
-(try(let [first args] (try ~(rest args) (catch Exception e# (str "Exception " e#)))))))
-
-
-;;test code
-(def v (safe [s (FileReader. (File. "file.txt"))] (.read s)))
-
-;;test code
-v
-
-
-
-
-;DETTA ÄR KOD SOM NÄSTAN ÖR KLAR, FUNGERAR TYP KANSKE EVENTUELLT
-
-(ns assignment2.core
-  (:gen-class))
-
 (import java.io.FileReader java.io.File)
 (import java.io.Closeable)
 
-
 (defmacro safe [& all]
-  (if(> (count all) 1)
-    `(try (let ~(first all) ~@(rest all))(catch Exception e# (str "Cought Exception " e#)))
-    `(try ~@all (catch Exception e# (str "Caught Exception " e#)))))
-
-
-;;fungerar för anrop med både ett och två argument
-;;retunerar exception för ett argument sämre för två, osäker på om .close fungerar
-
-(defmacro safe [& all]
-  (cond (> (count all) 1)
-     `(let ~(first all) (try ~@(rest all) (catch Exception e# (str "Caught Exception " e#))))
-    `(try ~@all (catch Exception e# (str "Caught exception " e#) 
-    (finally (if (instance? java.io.Closeable ~@all)
-      (.close ~@all) 
-    ))))`(try ~@all (catch Exception e# ( str "Exception " e#)))))
-
-
-(defn -main []
-  (println "hello world!")
-  (println (safe  (/ 1 0)))
-  (println (safe  (/ 10 2)))
-  (println (safe (/ 10 nil)))
-  (def v (safe [s (FileReader. (File. "C:\\Usedsrs\\dogge\\IdeaProjects\\assign2prop\\src\\assign2prop\\text.txt"))] (.read s)))
-  (println v))
+(if(>(count all)1)
+`(try (let ~(first all) (def result ~(second all))
+(if(instance? Closeable ~(ffirst all))
+(.close ~(ffirst all)))result)(catch Exception e# (str "Caught excpetion " e#)))
+`(try ~@all (catch Exception e# (str "Caught exception " e#)))))
