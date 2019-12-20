@@ -1,9 +1,4 @@
 (defmacro select[columns _ table _ where _ orderby]
-  (println "columns " columns)
-  (println "table " table)
-  (println "where " where)
-  (println (type where))
-  (println "orderby " orderby)
   (def col (get where 0))
   (def op (get where 1))
   (def arg (get where 2)) 
@@ -11,13 +6,10 @@
        (sort-by ~orderby)
    (map #(select-keys % ~columns))))
 
-;;   (map #(select-keys % ~columns))
-;; `(->> ~table (filter (second ~@where (first ~@where) last ~@where))))
+;;test code
 (def persons '({:id 1 :name "olle"} {:id 2 :name "anna"} {:id 3 :name
 "isak"} {:id 4 :name "beatrice"}))
 
-;;(macroexpand '(select [:id :name] from persons where [:id > 2] orderby :name))
+;;test code
 (select [:id :name] from persons where [:id > 2] orderby :name)
-;;({:id 4 :name "beatrice"} {:id 3 :name "isak"})
-;;columns _ table _ where _ orderby
- ;;(select-keys(table)(columns))
+
