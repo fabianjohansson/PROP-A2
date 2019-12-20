@@ -1,6 +1,9 @@
 (ns prop-assignment2.core
   (:gen-class))
 
+;;Michel Mottet Ellnefjärd - miel9299
+;;Fabian Johansson - fajo6716
+
 (import java.io.FileReader java.io.File)
 (import java.io.Closeable)
 
