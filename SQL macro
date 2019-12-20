@@ -1,3 +1,6 @@
+;;Michel Mottet Ellnefjärd - miel9299
+;;Fabian Johansson - fajo6716
+
 (defmacro select[columns _ table _ where _ orderby]
   (def col (get where 0))
   (def op (get where 1))
